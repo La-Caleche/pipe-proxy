@@ -2,5 +2,5 @@ dependencies {
     compileOnly project(":library:CalecheCore")
     compileOnly project(":library:Pipe")
 
-    compileOnly rootProject.lcDependencies.velocityApi
+    compileOnly project.velocity_api
 }
