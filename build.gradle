@@ -1,6 +1,8 @@
 dependencies {
-    compileOnly project(":library:CalecheCore")
-    compileOnly project(":library:Pipe")
+    api project(":library:Pipe")
 
-    compileOnly project.velocity_api
+    compileOnlyApi project.velocity_api
+
+    api project.cloud_velocity
+    api project.adventure_text_mini_message
 }
