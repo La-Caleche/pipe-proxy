@@ -2,7 +2,9 @@ package fr.lacaleche.pipeproxy.commands.parsers;
 
 import com.velocitypowered.api.proxy.Player;
 import fr.lacaleche.core.Core;
+import fr.lacaleche.pipe.Pipe;
 import fr.lacaleche.pipe.common.clients.Client;
+import fr.lacaleche.pipe.common.clients.ClientImpl;
 import fr.lacaleche.pipe.common.commands.parsers.CachedClientParser;
 import fr.lacaleche.pipeproxy.ProxyPipeImpl;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -35,7 +37,7 @@ public class OfflineCachedClientParser<C> extends CachedClientParser<C> {
                     .orElseThrow(() -> new IllegalArgumentException("Client not found"));
             return ArgumentParseResult.success(client);
         } catch (final IllegalArgumentException exception) {
-            return ArgumentParseResult.failure(new CachedClientParser.CachedClientParseException(input, commandContext, "nforonline"));
+            return ArgumentParseResult.failure(exception(input, commandContext, "nforonline"));
         }
     }
 
@@ -54,8 +56,8 @@ public class OfflineCachedClientParser<C> extends CachedClientParser<C> {
         return ProxyPipeImpl.get().getPlugin().getServer().getAllPlayers().stream().map(Player::getUniqueId).toList();
     }
 
-    private Collection<Client> offlineClients() {
-        return Core.get().getModelManager().get(Client.class).stream()
+    private Collection<ClientImpl> offlineClients() {
+        return Core.get().getModelManager().get((Class<ClientImpl>) Pipe.clientClass()).stream()
                 .filter(client -> onlinePlayers().stream().noneMatch(uuid -> uuid.equals(client.getUUID()))).toList();
     }
 

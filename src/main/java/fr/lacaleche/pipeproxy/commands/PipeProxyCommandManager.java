@@ -43,6 +43,8 @@ public class PipeProxyCommandManager extends GlobalCommandManager<CommandSource>
                         .registerInjector(PipeProxyCommandContext.class, new CommandContextInjector<>());
 
         commandManager.parserRegistry()
+                .registerNamedParser("proxy_client", ProxyClientParser.proxyClientParser())
+                .registerNamedParser("online_proxy_client", OnlineProxyClientParser.proxyClientParser())
                 .registerNamedParser("offline_cached_client", OfflineCachedClientParser.parser());
     }
 
