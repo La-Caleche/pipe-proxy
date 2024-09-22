@@ -9,6 +9,7 @@ import fr.lacaleche.core.modules.Module;
 import fr.lacaleche.core.utils.commons.consumers.TriConsumer;
 import fr.lacaleche.pipe.AbstractPipe;
 import fr.lacaleche.pipe.common.clients.Client;
+import fr.lacaleche.pipe.common.utils.server.interfaces.ServerManager;
 import fr.lacaleche.pipeproxy.events.ProxyPipeListenerManager;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class ProxyPipeImpl extends AbstractPipe implements ProxyPipe {
     private final Map<Module, List<TriConsumer<PostLoginEvent, Player, Client>>> joinCallbacks;
     private final Map<Module, List<TriConsumer<ServerConnectedEvent, Player, Client>>> joinServerCallbacks;
     private final Map<Module, List<TriConsumer<DisconnectEvent, Player, Client>>> quitCallbacks;
+
+    private ServerManager serverManager;
 
 
     public ProxyPipeImpl() {
@@ -110,6 +113,16 @@ public class ProxyPipeImpl extends AbstractPipe implements ProxyPipe {
     @Override
     public Map<Module, List<TriConsumer<DisconnectEvent, Player, Client>>> getQuitCallbacks() {
         return this.quitCallbacks;
+    }
+
+    @Override
+    public ServerManager getServerManager() {
+        return serverManager;
+    }
+
+    @Override
+    public void setServerManager(ServerManager serverManager) {
+        this.serverManager = serverManager;
     }
 
     @Override

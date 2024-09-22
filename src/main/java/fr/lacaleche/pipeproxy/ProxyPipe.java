@@ -8,6 +8,7 @@ import fr.lacaleche.core.modules.Module;
 import fr.lacaleche.core.utils.commons.consumers.TriConsumer;
 import fr.lacaleche.pipe.Pipe;
 import fr.lacaleche.pipe.common.clients.Client;
+import fr.lacaleche.pipe.common.utils.server.interfaces.ServerManager;
 import fr.lacaleche.pipeproxy.events.ProxyPipeListenerManager;
 
 import java.util.List;
@@ -65,6 +66,16 @@ public interface ProxyPipe extends Pipe {
      * TODO
      */
     Map<Module, List<TriConsumer<DisconnectEvent, Player, Client>>> getQuitCallbacks();
+
+    /**
+     * TODO
+     */
+    void setServerManager(ServerManager serverManager);
+
+    /**
+     * TODO
+     */
+    ServerManager getServerManager();
 
     /**
      * TODO

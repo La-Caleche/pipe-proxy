@@ -7,14 +7,11 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import fr.lacaleche.pipe.common.clients.Client;
 import fr.lacaleche.pipe.common.commands.GlobalCommandManager;
-import fr.lacaleche.pipe.common.commands.parsers.CachedClientParser;
-import fr.lacaleche.pipe.common.commands.parsers.ClientParser;
-import fr.lacaleche.pipe.common.commands.parsers.LocaleParser;
-import fr.lacaleche.pipe.common.commands.parsers.RankParser;
 import fr.lacaleche.pipeproxy.ProxyPipeImpl;
 import fr.lacaleche.pipeproxy.ProxyPlugin;
 import fr.lacaleche.pipeproxy.commands.parsers.*;
 import fr.lacaleche.pipeproxy.commands.injectors.CommandContextInjector;
+import fr.lacaleche.pipeproxy.commands.suggestions.OnlineServersSuggestion;
 import org.incendo.cloud.SenderMapper;
 import org.incendo.cloud.annotations.AnnotationParser;
 import org.incendo.cloud.execution.ExecutionCoordinator;
@@ -40,12 +37,14 @@ public class PipeProxyCommandManager extends GlobalCommandManager<CommandSource>
         this.setCloudAnnotationParser(new AnnotationParser<>(commandManager, CommandSource.class));
 
         commandManager.parameterInjectorRegistry()
-                        .registerInjector(PipeProxyCommandContext.class, new CommandContextInjector<>());
+                        .registerInjector(PipeProxyPipeCommandContext.class, new CommandContextInjector<>());
 
         commandManager.parserRegistry()
                 .registerNamedParser("proxy_client", ProxyClientParser.proxyClientParser())
                 .registerNamedParser("online_proxy_client", OnlineProxyClientParser.proxyClientParser())
-                .registerNamedParser("offline_cached_client", OfflineCachedClientParser.parser());
+                .registerNamedParser("offline_cached_client", OfflineCachedClientParser.parser())
+                .registerSuggestionProvider("online_servers", new OnlineServersSuggestion<>());
+
     }
 
     @Override

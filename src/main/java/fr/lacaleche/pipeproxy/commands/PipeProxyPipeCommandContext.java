@@ -1,16 +1,18 @@
 package fr.lacaleche.pipeproxy.commands;
 
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.proxy.ConsoleCommandSource;
 import com.velocitypowered.api.proxy.Player;
 import fr.lacaleche.pipe.common.clients.Client;
-import fr.lacaleche.pipe.common.commands.GlobalCommandContext;
+import fr.lacaleche.pipe.common.commands.GlobalPipeCommandContext;
+import fr.lacaleche.pipe.common.commands.enums.CommandExecutor;
 import fr.lacaleche.pipeproxy.ProxyPipeImpl;
 
 import java.util.Optional;
 
-public class PipeProxyCommandContext extends GlobalCommandContext<CommandSource> {
+public class PipeProxyPipeCommandContext extends GlobalPipeCommandContext<CommandSource> {
 
-    public PipeProxyCommandContext(CommandSource sender) {
+    public PipeProxyPipeCommandContext(CommandSource sender) {
         super(sender);
     }
 
@@ -36,5 +38,14 @@ public class PipeProxyCommandContext extends GlobalCommandContext<CommandSource>
             return null;
         }
         return client == null ? this.client() : client;
+    }
+
+    @Override
+    public CommandExecutor executor() {
+        if (sender() instanceof Player)
+            return CommandExecutor.PLAYER;
+        else if (sender() instanceof ConsoleCommandSource)
+            return CommandExecutor.SERVER;
+        return CommandExecutor.COMMON;
     }
 }
