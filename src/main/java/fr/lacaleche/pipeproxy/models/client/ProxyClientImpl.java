@@ -1,27 +1,32 @@
 package fr.lacaleche.pipeproxy.models.client;
 
 import com.velocitypowered.api.proxy.Player;
+import fr.lacaleche.core.models.clients.AbstractCoreClient;
+import fr.lacaleche.core.modules.interfaces.IModule;
 import fr.lacaleche.core.utils.logger.Logger;
-import fr.lacaleche.pipe.common.clients.ClientImpl;
+import fr.lacaleche.pipe.common.models.client.PipeAbstractClient;
+import fr.lacaleche.pipeproxy.ProxyPipe;
 import fr.lacaleche.pipeproxy.ProxyPipeImpl;
+import fr.lacaleche.pipeproxy.ProxyPlugin;
 import fr.lacaleche.pipeproxy.models.client.interfaces.ProxyClient;
+import fr.lacaleche.pipeproxy.module.ProxyModule;
 
 import java.util.UUID;
 
-public class ProxyClientImpl extends ClientImpl implements ProxyClient {
+public class ProxyClientImpl extends PipeAbstractClient<Player> implements ProxyClient {
 
     private Player cachedPlayer;
 
     public ProxyClientImpl(UUID uuid, String username) {
         super(uuid, username);
-        this.cachedPlayer = ProxyPipeImpl.get().getPlugin().getServer().getPlayer(uuid).orElse(null);
+        this.cachedPlayer = ProxyPipe.get().playerMapper().apply(this);
         this.save();
     }
 
     @Override
     public Player getPlayer() {
         if (this.cachedPlayer == null)
-            this.cachedPlayer = ProxyPipeImpl.get().getPlugin().getServer().getPlayer(this.getUUID()).orElse(null);
+            this.cachedPlayer = ProxyPipe.get().playerMapper().apply(this);
         return this.cachedPlayer;
     }
 

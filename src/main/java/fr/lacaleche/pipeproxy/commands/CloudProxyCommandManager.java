@@ -1,10 +1,10 @@
 package fr.lacaleche.pipeproxy.commands;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
+import fr.lacaleche.core.Core;
 import fr.lacaleche.pipeproxy.ProxyPipeImpl;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.incendo.cloud.SenderMapper;
@@ -22,7 +22,7 @@ public class CloudProxyCommandManager extends VelocityCommandManager<CommandSour
 
     @Override
     public @NonNull PermissionResult testPermission(@NonNull CommandSource sender, @NonNull Permission permission) {
-        PipeProxyCommandManager commandManager = (PipeProxyCommandManager) ProxyPipeImpl.get().getCommandManager();
+        CoreProxyCommandManagerImpl commandManager = (CoreProxyCommandManagerImpl) Core.get().getCommandManager();
         if (commandManager != null && permission.permissionString().startsWith("lc_perms"))
             return commandManager.hasPermission(commandManager.getClient(sender), permission);
         return super.testPermission(sender, permission);

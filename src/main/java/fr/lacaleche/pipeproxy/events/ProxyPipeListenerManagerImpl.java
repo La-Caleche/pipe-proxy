@@ -2,7 +2,6 @@ package fr.lacaleche.pipeproxy.events;
 
 import fr.lacaleche.core.events.GlobalListenerManager;
 import fr.lacaleche.core.modules.interfaces.IModule;
-import fr.lacaleche.pipe.Pipe;
 import fr.lacaleche.pipeproxy.ProxyPipe;
 import fr.lacaleche.pipeproxy.ProxyPipeImpl;
 import fr.lacaleche.pipeproxy.ProxyPlugin;
@@ -14,12 +13,16 @@ import java.util.Map;
 
 public class ProxyPipeListenerManagerImpl extends GlobalListenerManager implements ProxyPipeListenerManager {
 
-    private static final Map<IModule, List<Object>> proxyListeners = new HashMap<>();
+    private final Map<IModule, List<Object>> proxyListeners;
+
+    public ProxyPipeListenerManagerImpl() {
+        super();
+        this.proxyListeners  = new HashMap<>();
+    }
 
     @Override
     public void registerProxyListener(IModule module, Object listener) {
-        ProxyPipe pipe = ProxyPipeImpl.get();
-        ProxyPlugin plugin = pipe.getPlugin();
+        final ProxyPlugin plugin = module.getHandler().getParent();
         List<Object> listeners = proxyListeners.get(module);
 
         if (listeners == null)
@@ -33,11 +36,10 @@ public class ProxyPipeListenerManagerImpl extends GlobalListenerManager implemen
 
     @Override
     public void unregisterProxyListener(Object listener) {
-        ProxyPipe pipe = ProxyPipeImpl.get();
-        ProxyPlugin plugin = pipe.getPlugin();
-        IModule module = this.getModuleFor(listener);
+        final IModule module = this.getModuleFor(listener);
         if (module != null) {
-            List<Object> listeners = proxyListeners.get(module);
+            final ProxyPlugin plugin = module.getHandler().getParent();
+            final List<Object> listeners = proxyListeners.get(module);
             if (listeners != null) {
                 listeners.remove(listener);
             }
@@ -50,9 +52,8 @@ public class ProxyPipeListenerManagerImpl extends GlobalListenerManager implemen
 
     @Override
     public void unregisterProxyListeners(IModule module) {
-        ProxyPipe pipe = ProxyPipeImpl.get();
-        ProxyPlugin plugin = pipe.getPlugin();
-        List<Object> listeners = this.getCustomListeners(module);
+        final ProxyPlugin plugin = module.getHandler().getParent();
+        final List<Object> listeners = this.getCustomListeners(module);
         if (listeners.isEmpty()) return;
 
         for (Object listener : listeners) {
