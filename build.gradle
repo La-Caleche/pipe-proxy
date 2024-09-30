@@ -1,8 +1,0 @@
-dependencies {
-    api project(":library:Pipe")
-
-    compileOnlyApi project.velocity_api
-
-    api project.cloud_velocity
-    api project.adventure_text_mini_message
-}

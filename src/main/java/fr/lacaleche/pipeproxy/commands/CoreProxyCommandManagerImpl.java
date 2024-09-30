@@ -6,12 +6,14 @@ import com.google.inject.TypeLiteral;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import fr.lacaleche.core.commands.CoreCommandManagerImpl;
+import fr.lacaleche.core.modules.interfaces.IModuleHandler;
 import fr.lacaleche.pipe.common.commands.PipeCommandContext;
 import fr.lacaleche.pipe.common.commands.PipeCommandManagerImpl;
 import fr.lacaleche.pipe.common.commands.parsers.PipeLocaleParser;
 import fr.lacaleche.pipe.common.models.client.interfaces.PipeLocale;
 import fr.lacaleche.pipeproxy.ProxyPipeImpl;
 import fr.lacaleche.pipeproxy.ProxyPlugin;
+import fr.lacaleche.pipeproxy.commands.injectors.HandlerInjector;
 import fr.lacaleche.pipeproxy.commands.injectors.PipeCommandContextInjector;
 import fr.lacaleche.pipeproxy.commands.injectors.ProxyCommandContextInjector;
 import fr.lacaleche.pipeproxy.commands.parsers.OfflineCachedClientParser;
@@ -35,7 +37,8 @@ public class CoreProxyCommandManagerImpl extends PipeCommandManagerImpl<CommandS
 
         commandManager.parameterInjectorRegistry()
                 .registerInjector(PipeCommandContext.class, new PipeCommandContextInjector<>())
-                .registerInjector(ProxyCommandContext.class, new ProxyCommandContextInjector<>());
+                .registerInjector(ProxyCommandContext.class, new ProxyCommandContextInjector<>())
+                .registerInjector(IModuleHandler.class, new HandlerInjector<>());
 
         commandManager.parserRegistry()
                 .registerParser(ProxyClientParser.proxyClientParser())
