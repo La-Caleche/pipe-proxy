@@ -1,9 +1,5 @@
 plugins {
-    id("fr.lacaleche.caldle") version "1.2.3"
-}
-
-repositories {
-    maven("https://repo.papermc.io/repository/maven-public/")
+    id("fr.lacaleche.caldle")
 }
 
 dependencies {

@@ -16,12 +16,9 @@ pluginManagement {
             }
         }
     }
-}
 
-if (!providers.environmentVariable("CI").isPresent) {
-    includeBuild("../Pipe") {
-        dependencySubstitution {
-            substitute(module("fr.lacaleche.pipe:pipe")).using(project(":"))
-        }
+    plugins {
+        id("fr.lacaleche.caldle") version settings.providers.gradleProperty("caldleVersion")
+        id("fr.lacaleche.caldle.dev-dependencies-override") version settings.providers.gradleProperty("caldleVersion")
     }
 }
