@@ -1,0 +1,18 @@
+# Minecraft
+[versions]
+core = "2.0.4+"
+pipe = "1.0.0+"
+
+velocity-api = "3.5.0-SNAPSHOT"
+
+cloud-beta = "2.0.0-beta.10"
+adventure = "4.26.1"
+
+[libraries]
+caleche-core = { module = "fr.lacaleche.core:calechecore", version.ref = "core" }
+caleche-pipe = { module = "fr.lacaleche.pipe:pipe", version.ref = "pipe" }
+
+velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "velocity-api" }
+
+cloud-velocity = { module = "org.incendo:cloud-velocity", version.ref = "cloud-beta" }
+adventure-text-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }

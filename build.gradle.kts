@@ -1,5 +1,9 @@
+plugins {
+    id("fr.lacaleche.caldle")
+}
+
 dependencies {
-    api(project(":library:Pipe"))
+    api(libs.caleche.pipe)
 
     compileOnlyApi(libs.velocity.api)
 
